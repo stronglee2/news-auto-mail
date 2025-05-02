@@ -2,8 +2,8 @@ import requests
 import pandas as pd
 
 # 네이버 개발자센터에서 발급받은 ID와 Secret
-client_id = "여기에_네_Client_ID_복붙"
-client_secret = "여기에_네_Client_Secret_복붙"
+client_id = "oVuchavnGKrySN6cspFN"
+client_secret = "mU2534hTwK"
 
 # 지역과 키워드 리스트
 areas = ["강릉시", "고성군", "양양군"]
