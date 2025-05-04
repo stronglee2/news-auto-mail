@@ -53,5 +53,38 @@ if __name__ == "__main__":
         df = pd.DataFrame(all_news)
         df.to_csv('filtered_news_full.csv', index=False, encoding='utf-8-sig')
         print("✅ 뉴스 수집 완료! filtered_news_full.csv 파일 생성됨.")
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+
+from_email = 'sunboya1615@gmail.com'  # 너의 Gmail 주소
+to_email = 'stronglee2@naver.com'         # 받을 사람 이메일
+app_password = 'dlbh yxrc aazn xbrd'  # 방금 만든 앱 비밀번호
+
+# 메일 구성
+msg = MIMEMultipart()
+msg['Subject'] = '자동 뉴스 리포트 (CSV 첨부)'
+msg['From'] = from_email
+msg['To'] = to_email
+
+# 본문 텍스트
+body = MIMEText('자동 수집된 뉴스 리포트를 첨부합니다.', 'plain')
+msg.attach(body)
+
+# CSV 첨부
+filename = 'filtered_news_full.csv'
+with open(filename, 'rb') as f:
+    part = MIMEApplication(f.read(), Name=filename)
+    part['Content-Disposition'] = f'attachment; filename="{filename}"'
+    msg.attach(part)
+
+# Gmail SMTP 전송
+s = smtplib.SMTP('smtp.gmail.com', 587)
+s.starttls()
+s.login(from_email, app_password)
+s.sendmail(from_email, to_email, msg.as_string())
+s.quit()
+     
     else:
         print("❌ 조건에 맞는 뉴스가 없습니다.")
